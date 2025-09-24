@@ -9,8 +9,10 @@
         }
     },
     "require": {
-        "livewire/livewire": "^3.0"
+        "livewire/livewire": "^3.0",
+        "spatie/laravel-web-tinker": "^1.0"
     },
+    "require-dev": {},
     "extra": {
         "laravel": {
             "providers": [

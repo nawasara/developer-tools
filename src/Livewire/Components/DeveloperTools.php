@@ -89,6 +89,12 @@ class DeveloperTools extends Component
         return redirect()->to(url()->current());
     }
 
+    public function runTinker()
+    {
+        return redirect()->to('/tinker');
+
+    }
+
     public function resetOutput()
     {
         $this->output = '';

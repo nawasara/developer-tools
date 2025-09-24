@@ -60,6 +60,7 @@
                         ['method' => 'runRouteClear', 'label' => 'Clear Route', 'icon' => '🛣️'],
                         ['method' => 'runOptimize', 'label' => 'Optimize', 'icon' => '⚡'],
                         ['method' => 'runStorageLink', 'label' => 'Storage Link', 'icon' => '🔗'],
+                        ['method' => 'runTinker', 'label' => 'Tinker', 'icon' => '🔗'],
                     ];
                 @endphp
 
