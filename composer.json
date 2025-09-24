@@ -1,0 +1,21 @@
+{
+    "name": "nawasara/developer-tools",
+    "description": "Developer Tools for Nawasara Laravel projects.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Nawasara\\DeveloperTools\\": "src/"
+        }
+    },
+    "require": {
+        "livewire/livewire": "^3.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nawasara\\DeveloperTools\\DeveloperToolsServiceProvider"
+            ]
+        }
+    }
+}
