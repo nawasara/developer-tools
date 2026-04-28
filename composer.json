@@ -1,23 +1,45 @@
 {
     "name": "nawasara/developer-tools",
-    "description": "Developer Tools for Nawasara Laravel projects.",
+    "description": "Developer utilities for Nawasara Laravel projects: in-browser Tinker REPL, query inspector, and a quick-action launcher.",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "nawasara",
+        "laravel",
+        "developer",
+        "tinker",
+        "debug",
+        "tooling"
+    ],
+    "authors": [
+        {
+            "name": "Pringgo J. Saputro",
+            "email": "odyinggo@gmail.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/nawasara/developer-tools/issues",
+        "source": "https://github.com/nawasara/developer-tools"
+    },
     "autoload": {
         "psr-4": {
             "Nawasara\\DeveloperTools\\": "src/"
         }
     },
     "require": {
+        "php": "^8.1",
+        "illuminate/support": "^10.0|^12.0",
         "livewire/livewire": "^3.0",
         "spatie/laravel-web-tinker": "^1.0"
     },
-    "require-dev": {},
     "extra": {
         "laravel": {
             "providers": [
                 "Nawasara\\DeveloperTools\\DeveloperToolsServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
