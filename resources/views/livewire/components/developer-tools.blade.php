@@ -1,3 +1,4 @@
+{{-- ui-lint-skip: dev-only floating overlay panel with custom positioning and theming; not part of admin UI system --}}
 <div x-data="{ open: @entangle('isOpen') }" x-cloak>
     @if (env('APP_DEBUG'))
         <!-- Floating Button -->
