@@ -42,11 +42,11 @@
                 <!-- Refresh Warning -->
                 @if ($needsRefresh)
                     <div
-                        class="p-3 bg-yellow-100 dark:bg-yellow-800 border border-yellow-400 text-yellow-700 dark:text-yellow-200 rounded-md text-sm">
+                        class="p-3 bg-amber-100 dark:bg-amber-900/30 border border-amber-400 text-amber-800 dark:text-amber-200 rounded-md text-sm">
                         <p class="font-medium">⚠️ Page Refresh Required</p>
                         <p class="mt-1">Some commands require a page refresh to take effect.</p>
                         <button onclick="window.location.reload()"
-                            class="mt-2 bg-yellow-500 hover:bg-yellow-600 text-white text-xs py-1 px-3 rounded transition-colors">
+                            class="mt-2 bg-amber-600 hover:bg-amber-700 text-white text-xs py-1 px-3 rounded transition-colors">
                             Refresh Now
                         </button>
                     </div>
