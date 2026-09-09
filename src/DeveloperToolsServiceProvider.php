@@ -13,7 +13,6 @@ class DeveloperToolsServiceProvider extends ServiceProvider
         if (class_exists(Livewire::class)) {
             Livewire::component('nawasara-developer-tools.components.developer-tools', \Nawasara\DeveloperTools\Livewire\Components\DeveloperTools::class);
         }
-        $this->installWebTinker();
     }
 
     public function register()
@@ -22,52 +21,31 @@ class DeveloperToolsServiceProvider extends ServiceProvider
     }
 
     /**
-     * Memasang aset web-tinker — HANYA di lingkungan pengembangan, dan hanya
-     * lewat perintah artisan, tidak pernah saat boot.
+     * Aset web-tinker TIDAK dipasang dari sini.
      *
-     * ⚠️ Sebelumnya `Artisan::call('web-tinker:install')` dipanggil langsung
-     * dari boot(). Perintah itu MEMINTA KONFIRMASI bila berkasnya sudah ada,
-     * dan di lingkungan tanpa terminal ia menunggu jawaban yang tidak pernah
-     * datang — proses menggantung selamanya, tanpa galat.
+     * ⚠️ boot() dulu memanggil `Artisan::call('web-tinker:install')` pada
+     * SETIAP permintaan. Perintah itu membungkus `vendor:publish`, yang
+     * BERTANYA saat berkasnya sudah ada — dan di lingkungan tanpa terminal
+     * pertanyaan itu menunggu jawaban yang tak pernah datang. Prosesnya
+     * menggantung selamanya, tanpa galat.
      *
-     * Yang menyembunyikannya: di server yang berkasnya sudah terpasang,
-     * perintahnya selesai seketika. Kegagalannya baru muncul di mesin BARU,
-     * dan bentuknya bukan pesan galat melainkan container yang tidak pernah
-     * sehat — nginx tidak pernah menyala karena entrypoint masih menunggu
-     * `php artisan config:clear` yang tak kunjung selesai.
+     * `--force` tidak menolong: signature `web-tinker:install` kosong, jadi
+     * opsi itu justru ditolak. Yang menerima --force adalah vendor:publish,
+     * dan ia tidak terjangkau dari sini.
      *
-     * `catch (\Exception)` juga tidak menolong: menggantung bukan exception.
+     * `catch (\Exception)` juga tidak menolong — menggantung bukan exception.
      *
-     * Terbukti 9 September 2026 saat memindahkan Nawasara ke LXC baru.
+     * Yang menyembunyikannya bertahun-tahun: di server yang asetnya sudah
+     * terpasang, perintah ini selesai seketika. Kegagalannya hanya muncul di
+     * mesin BARU, dan bentuknya bukan pesan galat melainkan container yang
+     * tidak pernah sehat — nginx tak kunjung menyala karena entrypoint masih
+     * menunggu `php artisan config:clear`, yang menunggu provider ini.
+     *
+     * Memasang aset adalah pekerjaan SEKALI saat penyiapan, bukan pekerjaan
+     * runtime. Bila web-tinker dipakai, jalankan sendiri:
+     *
+     *     php artisan vendor:publish --tag=web-tinker-assets
+     *
+     * Terbukti 9 September 2026 saat memindahkan Nawasara ke LXC sendiri.
      */
-    protected function installWebTinker()
-    {
-        // Produksi tidak pernah membutuhkan pemasangan aset saat runtime.
-        if ($this->app->environment('production')) {
-            return;
-        }
-
-        // Tetap tidak dijalankan saat melayani permintaan web; hanya berguna
-        // di konsol, dan di sanalah tempatnya bila memang diperlukan.
-        if (! $this->app->runningInConsole()) {
-            return;
-        }
-
-        if (! class_exists('Spatie\WebTinker\WebTinkerServiceProvider')) {
-            return;
-        }
-
-        // Sudah terpasang → tidak ada yang perlu dikerjakan. Pemeriksaan ini
-        // yang menggantikan konfirmasi interaktif tadi.
-        if (file_exists(public_path('vendor/web-tinker'))) {
-            return;
-        }
-
-        try {
-            \Artisan::call('web-tinker:install', ['--force' => true]);
-        } catch (\Throwable $e) {
-            // Dibiarkan diam: ini alat bantu pengembangan, dan kegagalannya
-            // tidak boleh menghalangi aplikasi menyala.
-        }
-    }
 }
